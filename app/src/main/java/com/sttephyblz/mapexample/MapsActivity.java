@@ -13,11 +13,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    private LatLng location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Double latitude = getIntent().getDoubleExtra("latitude", 1.0);
+        Double longitude = getIntent().getDoubleExtra("longitude", 1.0);
+        location = new LatLng(latitude, longitude);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -42,10 +47,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Germany and move the camera
         LatLng sydney = new LatLng(51.0778454,5.9566771);
         mMap.addMarker(new MarkerOptions()
-                .position(sydney)
+                .position(location)
                 .title("Germany")
                 .draggable(true)
                 .alpha((float) 0.5));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 }
